@@ -18,12 +18,12 @@ public class Grille {//on cree nos attributs
     Cellule[][] Cellules = new Cellule[6][7];
 
     public boolean ajouterJetonDansColonne(Jeton Notre_Jeton, int indice) {
-        if (Cellules[0][indice] != null) {
+        if (Cellules[0][indice].jetonCourant!= null) {
             return false;//si la colonne est pleine on renvoie false
         } else {//sinon ... 
             int i = 5;//notre indice
             while (i != 0) {
-                if (Cellules[i][indice] != null) {
+                if (Cellules[i][indice].jetonCourant== null) {
                     Cellules[i][indice].jetonCourant = Notre_Jeton;
                     return true;
                 }
@@ -223,7 +223,7 @@ public class Grille {//on cree nos attributs
 
     public boolean colonneRemplie(int j) {
         for (int i = 0; i < 6; i++) {
-            if (Cellules[i][j] == null) {
+            if (Cellules[i][j].jetonCourant==null) {
                 return false;
             } else {
                 return true;

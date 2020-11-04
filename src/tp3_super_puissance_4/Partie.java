@@ -107,12 +107,14 @@ public class Partie {//on cree nos attributs
         for (int l = 0; l < 21; l++) {
             Jeton new_jeton=new Jeton(coul1);
             ListeJoueurs[0].ajouterJeton(new_jeton);
+            
         }
         String coul2 = ListeJoueurs[1].Couleur;
         //pour le deuxieme joueur : 
         for (int m = 0; m < 21; m++) {
             Jeton new_jeton=new Jeton(coul2);
             ListeJoueurs[1].ajouterJeton(new_jeton);
+            
         }
 
     }
@@ -150,6 +152,8 @@ public class Partie {//on cree nos attributs
             }
         }
 
+        
+        //Menu ... 
         while (true) {
             System.out.println(("Voici la grille :"));
             LaGrille.afficherGrilleSurConsole();
@@ -167,15 +171,21 @@ public class Partie {//on cree nos attributs
             //Placer un jeton :
             if(choix==1){
                 while (true){
-                System.out.println("Choix de la colonne :");
+                System.out.println("Choix de la colonne (entre 0 et 6) :");
                 int j=(int)saisieUtilisateur.nextInt();
+                if((j<0)||(j>6)){
+                    
+                }else{
                 if(LaGrille.colonneRemplie(j)==true){
                     System.out.println("La colonne est pleine");
+                    
                 }else{
-                    LaGrille.ajouterJetonDansColonne(ListeJoueurs[0].ListeJetons[ListeJoueurs[0].nombreJetons_restants], j);
+                    LaGrille.ajouterJetonDansColonne(ListeJoueurs[0].ListeJetons[(ListeJoueurs[0].nombreJetons_restants)-1], j);
+                    break;
                 }
                     //test2
                 }
+            }
             }
         }
     }
