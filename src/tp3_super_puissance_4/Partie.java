@@ -174,7 +174,7 @@ public class Partie {//on cree nos attributs
                 }else{
                     LaGrille.ajouterJetonDansColonne(ListeJoueurs[0].ListeJetons[ListeJoueurs[0].nombreJetons_restants], j);
                 }
-                    //test
+                    //test2
                 }
             }
         }
