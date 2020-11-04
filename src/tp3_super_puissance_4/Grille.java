@@ -17,19 +17,37 @@ public class Grille {//on cree nos attributs
 
     Cellule[][] Cellules = new Cellule[6][7];
 
-    public boolean ajouterJetonDansColonne(Jeton Notre_Jeton, int indice) {
-        if (Cellules[0][indice].jetonCourant!= null) {
-            return false;//si la colonne est pleine on renvoie false
-        } else {//sinon ... 
-            int i = 5;//notre indice
-            while (i != 0) {
-                if (Cellules[i][indice].jetonCourant== null) {
-                    Cellules[i][indice].jetonCourant = Notre_Jeton;
-                    return true;
+    public int ajouterJetonDansColonne(Jeton Notre_Jeton, int indice) {
+        int nombre_a_retourner = 0;
+        for (int ligne=0;ligne<6;ligne++){
+            if(Cellules[ligne][indice].presenceTrouNoir()==true){
+                Cellules[ligne][indice].activerTrouNoir();
+                if(Cellules[ligne][indice].presenceDesintegrateur()==true){
+                    Cellules[ligne][indice].recupererDesintegrateur();
+                    return 1;
                 }
-                i = i - 1;
+                return 0;
             }
-            return false;//c'est inutile puisque si la colonne n'est pas pleine
+            if(Cellules[ligne][indice].presenceDesintegrateur()==true){
+                    Cellules[ligne][indice].recupererDesintegrateur();
+                    nombre_a_retourner=1;
+                }
+            
+            
+        }
+        if(nombre_a_retourner!=1){
+                nombre_a_retourner=0;
+        }
+        if (celluleOccupee(0,indice)== true) {
+            return 0;//si la colonne est pleine on renvoie false
+        } else {//sinon ... 
+            for(int i=5;i>=0;i=i-1) {
+                if (celluleOccupee(i,indice)==false) {
+                    Cellules[i][indice].jetonCourant = Notre_Jeton;
+                    return nombre_a_retourner;
+                }
+            }
+            return 0;//c'est inutile puisque si la colonne n'est pas pleine
             //et que je regarde chacun de ses elements je trouverai une cellule vide
             //et donc la methode renverrai un boolean mais la machine ne le sait pas
         }
@@ -61,7 +79,6 @@ public class Grille {//on cree nos attributs
         //on va parcourir notre grille et si on a un trou noir on affiche un
         //'o' et si on a un jeton sans trou noir on affiche 'j' ou 'r' pour
         //rouge ou jaune ... 
-
         for (int i = 0; i < 6; i++) {//ligne
             String ligne = "";
             for (int j = 0; j < 7; j++) {//colonne, elements d'une ligne ... 
@@ -70,28 +87,24 @@ public class Grille {//on cree nos attributs
                 if (Cellules[i][j].presenceTrouNoir() == true) {
                     caractere = "[o]";//si on a un trou noir on affiche ca
                 } else {//et si on a pas de trou noir
-                    if ((Cellules[i][j].jetonCourant == null)||Cellules[i][j].jetonCourant.Couleur==null) {
-                        caractere = "[ ]";//si on a pas de jeton le caractere est un
-                        //espace
-                    }
-                    else{
+                    if(Cellules[i][j].jetonCourant!=null){
                     if (Cellules[i][j].lireCouleurDuJeton() == "Jaune") {//mais un jeton
                         caractere = "[j]";
                     }
                     if (Cellules[i][j].lireCouleurDuJeton() == "Rouge") {//mais un jeton
                         caractere = "[r]";
                     }
-                    else{
+                    
+                    }else{
                         caractere="[ ]";
                     }}
-                }
                 ligne += caractere;//on ajoute a notre ligne un caractere et a la
                 //fin de la ligne on renvoie la ligne entiere
-
-            }
+                }
+                
             System.out.println(ligne);//on affiche les lignes une par une
-        }
-    }
+                }}    
+    
 
     public boolean celluleOccupee(int i, int j) {
         if (Cellules[i][j].jetonCourant == null) {

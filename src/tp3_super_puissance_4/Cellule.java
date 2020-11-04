@@ -84,6 +84,7 @@ public String lireCouleurDuJeton(){
 public boolean recupererDesintegrateur(){
     if (desintegrateur==true){//si on a un desintegrateur on l'enleve
         desintegrateur=false;
+        
         return true;//et on renvoie vraie
     }
     else {

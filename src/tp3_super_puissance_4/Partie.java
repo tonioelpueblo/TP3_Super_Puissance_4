@@ -21,7 +21,7 @@ public class Partie {//on cree nos attributs
     Joueur[] ListeJoueurs = new Joueur[2];
     Jeton[] ListeJeton = new Jeton[21];
     Joueur joueurCourant;
-    Grille LaGrille=new Grille();
+    Grille LaGrille = new Grille();
 
     public void attribuerCouleursAuxJoueurs() {
         // génération d'un nombre >= 0 et < 2
@@ -105,16 +105,16 @@ public class Partie {//on cree nos attributs
         //pour le premier joueur :
         String coul1 = ListeJoueurs[0].Couleur;
         for (int l = 0; l < 21; l++) {
-            Jeton new_jeton=new Jeton(coul1);
+            Jeton new_jeton = new Jeton(coul1);
             ListeJoueurs[0].ajouterJeton(new_jeton);
-            
+
         }
         String coul2 = ListeJoueurs[1].Couleur;
         //pour le deuxieme joueur : 
         for (int m = 0; m < 21; m++) {
-            Jeton new_jeton=new Jeton(coul2);
+            Jeton new_jeton = new Jeton(coul2);
             ListeJoueurs[1].ajouterJeton(new_jeton);
-            
+
         }
 
     }
@@ -138,21 +138,13 @@ public class Partie {//on cree nos attributs
         Random r = new Random();
         int n = r.nextInt(2);
         if (n == 0) {//dans un cas ... 
-            if (ListeJoueurs[0].Couleur == "Jaune") {
-                System.out.println("Le joueur 1 commence");
-            } else {
-                System.out.println("Le joueur 2 commence");
-            }
-
+            System.out.println("Le joueur 1 commence");
+            joueurCourant = ListeJoueurs[0];
         } else {
-            if (ListeJoueurs[1].Couleur == "Jaune") {
-                System.out.println("Le joueur 2 commence");
-            } else {
-                System.out.println("Le joueur 1 commence");
-            }
+            System.out.println("Le joueur 2 commence");
+            joueurCourant = ListeJoueurs[1];
         }
 
-        
         //Menu ... 
         while (true) {
             System.out.println(("Voici la grille :"));
@@ -160,32 +152,31 @@ public class Partie {//on cree nos attributs
             System.out.println("Que voulez-vous faire ? :"
                     + "\n1) Placer un jeton"
                     + "\n2) Recuperer un jeton"
-                    +"\n3) Desintegrer un jeton adverse"
-                    +"\n4) Quitter");
-            int choix=saisieUtilisateur.nextInt();
-            if(choix==4){
+                    + "\n3) Desintegrer un jeton adverse"
+                    + "\n4) Quitter");
+            int choix = saisieUtilisateur.nextInt();
+            if (choix == 4) {
                 break;
             }
-            
-            
+//A chaque point du menu on doit verifier si il y aun gagnant ... 
             //Placer un jeton :
-            if(choix==1){
-                while (true){
-                System.out.println("Choix de la colonne (entre 0 et 6) :");
-                int j=(int)saisieUtilisateur.nextInt();
-                if((j<0)||(j>6)){
-                    
-                }else{
-                if(LaGrille.colonneRemplie(j)==true){
-                    System.out.println("La colonne est pleine");
-                    
-                }else{
-                    LaGrille.ajouterJetonDansColonne(ListeJoueurs[0].ListeJetons[(ListeJoueurs[0].nombreJetons_restants)-1], j);
-                    break;
+            if (choix == 1) {
+                while (true) {
+                    System.out.println("Choix de la colonne (entre 0 et 6) :");
+                    int j = (int) saisieUtilisateur.nextInt();
+                    if ((j < 0) || (j > 6)) {
+
+                    } else {
+                        if (LaGrille.colonneRemplie(j) == true) {
+                            System.out.println("La colonne est pleine");
+
+                        } else {
+joueurCourant.nombreDesintegrateurs=LaGrille.ajouterJetonDansColonne(joueurCourant.ListeJetons[(joueurCourant.nombreJetons_restants) - 1], j);
+                            
+                            break;
+                        }
+                    }
                 }
-                    //test2
-                }
-            }
             }
         }
     }
