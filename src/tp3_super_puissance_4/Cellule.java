@@ -78,7 +78,12 @@ public boolean presenceDesintegrateur(){
     return desintegrateur;//si un desintegrateur est present on renvoie vrai
 }
 public String lireCouleurDuJeton(){
-    return jetonCourant.Couleur;//on renvoie la couleur du Jeton Courant ... 
+    if(jetonCourant==null){
+            return "null";
+        }else{
+        return jetonCourant.Couleur;//on renvoie la couleur du Jeton Courant ... 
+        }
+    
     
 }
 public boolean recupererDesintegrateur(){

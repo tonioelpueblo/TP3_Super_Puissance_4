@@ -17,15 +17,24 @@ public class Grille {//on cree nos attributs
 
     Cellule[][] Cellules = new Cellule[6][7];
 
-    public int ajouterJetonDansColonne(Jeton Notre_Jeton, int indice) {
+    public int ajouterJetonDansColonne(Jeton Notre_Jeton, int indice,Joueur joueur) {
+        //cette fonction (methode) prend un jeton et un indice en entree,
+        //elle va placer le jeton comme si il etait laché en haut de la colonne
+        //si il croise un trou noir il disparait et on retourne 0
+        //si il croise un trou noir avec un desintegrateur il retourne 1
+        //si il croise un desintegrateur il retourne 1
+        //cette methode renvoie donc un nombre (1 ou 0) qui correspond au 
+        //desintegrateur ... 
         int nombre_a_retourner = 0;
         for (int ligne=0;ligne<6;ligne++){
             if(Cellules[ligne][indice].presenceTrouNoir()==true){
                 Cellules[ligne][indice].activerTrouNoir();
                 if(Cellules[ligne][indice].presenceDesintegrateur()==true){
                     Cellules[ligne][indice].recupererDesintegrateur();
+                    joueur.nombreJetons_restants=joueur.nombreJetons_restants+1;
                     return 1;
                 }
+                joueur.nombreJetons_restants=joueur.nombreJetons_restants+1;
                 return 0;
             }
             if(Cellules[ligne][indice].presenceDesintegrateur()==true){
@@ -116,6 +125,7 @@ public class Grille {//on cree nos attributs
 
     public String lireCouleurDuJeton(int i, int j) {
         return Cellules[i][j].lireCouleurDuJeton();
+        
     }
 
     public boolean etreGagnantePourJoueur(Joueur joueur) {
@@ -191,14 +201,21 @@ public class Grille {//on cree nos attributs
         int compteur = 0;
         String couleur1=null;//notre premiere couleur
         while ((j >= 0) && (j < 7) && (i >= 0) && (i < 6)) {
-            String couleur2=cellule[i][j].lireCouleurDuJeton();
+            String couleur2;
+            
+            couleur2=cellule[i][j].lireCouleurDuJeton();
+            
             if ((couleur2 ==couleur1)&&(couleur2==coul)) {
                 // Si la couleur correspond ... 
                 couleur1 = cellule[i][j].lireCouleurDuJeton();
                 compteur++;
             } else {
                 // Sinon on reinitialise
-                couleur1 = cellule[i][j].lireCouleurDuJeton();
+                
+            
+            couleur1=cellule[i][j].lireCouleurDuJeton();
+            
+                                            
                 compteur=1;//le compteur par default vaut 1 puisque une case
                 //correspond avec elle-meme ... 
             }
@@ -221,7 +238,7 @@ public class Grille {//on cree nos attributs
     public void tasserGrille(int i, int j) {
         j=j-1;
         Cellule a = Cellules[0][j];//contient la cellule 1 (0) de notre colonne
-        Cellules[0][j] = null;//on vide notre premiere cellule
+        Cellules[0][j] = new Cellule();//on vide notre premiere cellule
         for (int k = 1; k < i; k++) {//pour k va de la ligne zero a la ligne i
             //si l'indice était 0 alors on entre pas dans la boucle
             //puisque 1!<0, pour le reste on effectue :
